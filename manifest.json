@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Whatnot Sale → ntfy Notifier",
+  "version": "1.3.0",
+  "description": "Detects sales on Whatnot live shows while you watch and posts details to an ntfy.sh topic.",
+  "minimum_chrome_version": "111",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://whatnot.com/*",
+    "https://*.whatnot.com/*",
+    "https://ntfy.sh/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://whatnot.com/*", "https://*.whatnot.com/*"],
+      "js": ["injected.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://whatnot.com/*", "https://*.whatnot.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "world": "ISOLATED"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Whatnot → ntfy"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
